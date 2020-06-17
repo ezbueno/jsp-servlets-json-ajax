@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
-import bean.Usuario;
+import beans.Usuario;
 import dao.DaoUsuario;
 
 @WebServlet("/pages/fileUpload")

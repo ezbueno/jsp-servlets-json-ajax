@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import bean.Usuario;
+import beans.Usuario;
 
 @WebFilter(urlPatterns = {"/pages/*"})
 public class FilterAutenticacao implements Filter {

@@ -13,12 +13,8 @@
 	<table id="dataTable" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
+                <th>Id</th>
+                <th>Login</th>
             </tr>
         </thead>
 	</table>
@@ -26,7 +22,7 @@
 	$(document).ready(function() {
 	    $('#dataTable').DataTable( {
 	        "processing": true,
-	        "serverSide": true,
+	        "serverSide": false, // alterado para false, para que o campo Search faça a consulta com os dados já mostrados na tela
 	        "ajax": "carregarDadosDataTable"
 	    } );
 	} );
