@@ -33,13 +33,15 @@ public class DownloadArquivo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String tipoExportado = request.getParameter("tipoExportado");
-		ServletContext context = request.getServletContext();
-
 		try {
+			
+			ServletContext context = request.getServletContext();
+			
+			String tipoExportado = request.getParameter("tipoExportado");
+			
 			List<Usuario> usuarios = daoUsuario.listarUsuarios();
 
-			String fileURL = relatorio.gerarRelatorio(usuarios, new HashMap(), "relatorio_usuario", "relatorio_usuario", context);
+			String fileURL = relatorio.gerarRelatorio(usuarios, new HashMap(), "relatorio_usuario", "relatorio_usuario", context, tipoExportado);
 			
 			// constrói o caminho completo e absoluto do arquivo
 			File downloadArquivo = new File(fileURL);
@@ -83,5 +85,4 @@ public class DownloadArquivo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 	}
-
 }

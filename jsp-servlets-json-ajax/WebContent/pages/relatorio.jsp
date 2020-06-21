@@ -9,7 +9,7 @@
 <body>
 	<h1>Relatórios</h1>
 	
-	<a href="DownloadArquivo?tipoExportado=PDF">PDF</a>
-	<a href="DownloadArquivo?tipoExportado=EXCEL">Excel</a>
+	<a href="DownloadArquivo?tipoExportado=pdf">PDF</a>
+	<a href="DownloadArquivo?tipoExportado=csv">CSV</a>
 </body>
 </html>

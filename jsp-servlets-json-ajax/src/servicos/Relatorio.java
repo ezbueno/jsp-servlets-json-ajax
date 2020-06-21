@@ -13,7 +13,10 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRCsvExporter;
+import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 @SuppressWarnings("deprecation")
@@ -30,7 +33,7 @@ public class Relatorio implements Serializable {
 	private File arquivoGerado = null;
 	
 	public String gerarRelatorio(List<?> listaDataBeanCollection, HashMap parametrosRelatorio, String nomeRelatorioJasper, 
-			String nomeRelatorioSaida, ServletContext servletContext) throws Exception {
+			String nomeRelatorioSaida, ServletContext servletContext, String tipoExtensao) throws Exception {
 		
 		// Cria a lista de CollectionDataSource para carregar os dados para o relatório
 		JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(listaDataBeanCollection);
@@ -60,11 +63,16 @@ public class Relatorio implements Serializable {
 		
 		// Carrega o arquivo
 		JasperPrint impressoraJasper = JasperFillManager.fillReport(relatorioJasper, parametrosRelatorio, jrbcds);
-		
-		exporter = new JRPdfExporter();
-		
+			
+		if (tipoExtensao.equalsIgnoreCase("pdf")) {
+			exporter = new JRPdfExporter();
+		} else if (tipoExtensao.equalsIgnoreCase("csv")) {
+			//exporter = new JRXlsExporter();
+			exporter = new JRCsvExporter();
+		}
+
 		// caminho do relatório exportado
-		caminhoArquivoRelatorio = caminhoRelatorio + SEPARATOR + nomeRelatorioSaida + ".pdf";
+		caminhoArquivoRelatorio = caminhoRelatorio + SEPARATOR + nomeRelatorioSaida + "." + tipoExtensao;
 		
 		// cria novo arquivo exportado
 		arquivoGerado = new File(caminhoArquivoRelatorio);
