@@ -18,13 +18,13 @@ import beans.Usuario;
 @WebFilter(urlPatterns = {"/pages/*"})
 public class FilterAutenticacao implements Filter {
 	
-	// faz alguma coisa quando a aplicaÁ„o È derrubada
+	// faz alguma coisa quando a aplica√ß√£o √© derrubada
 	@Override
 	public void destroy() {
 		Filter.super.destroy();
 	}
 	
-	// intercepta todas as requisiÁıes
+	// intercepta todas as requisi√ß√µes
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -34,20 +34,20 @@ public class FilterAutenticacao implements Filter {
 		
 		String urlAutenticacao = httpServletRequest.getServletPath();
 		
-		// retorna null caso o usu·rio n„o esteja logado
+		// retorna null caso o usu√°rio n√£o esteja logado
 		Usuario usuarioLogado =  (Usuario) httpSession.getAttribute("usuario");
 		
-		if (usuarioLogado == null && !urlAutenticacao.equalsIgnoreCase("/pages/Autenticacao")) { // usu·rio n„o logado
+		if (usuarioLogado == null && !urlAutenticacao.equalsIgnoreCase("/pages/Autenticacao")) { // usu√°rio n√£o logado
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/autenticar.jsp?url=" + urlAutenticacao);
 			dispatcher.forward(request, response);
 			return; // retorna para o processo para ser feito o redirecionamento
 		}
 		
-		// executa as aÁıes do request e response
+		// executa as a√ß√µes do request e response
 		chain.doFilter(request, response);	
 	}
 	
-	// executa alguma coisa quando a aplicaÁ„o È iniciada
+	// executa alguma coisa quando a aplica√ß√£o √© iniciada
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 	}
