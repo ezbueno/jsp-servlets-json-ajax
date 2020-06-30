@@ -8,10 +8,11 @@
 
 <link href='../scripts/fullcalendar.min.css' rel='stylesheet' />
 <link href='../scripts/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<script src="../scripts/jquery-3.5.1.min.js"></script>
 <script src='../scripts/moment.min.js'></script>
 <script src='../scripts/jquery.min.js'></script>
 <script src='../scripts/fullcalendar.min.js'></script>
-
+<script src="../scripts/jquery.mask.js"></script>
 <style>
 
 	body {
@@ -30,6 +31,21 @@
 </head>
 <body>
 	<h1>Calendário</h1>
+		
+	<form action="buscarCalendarioDatas" method="post">
+		<table>
+			<tr>
+				<td>Descrição:</td>
+				<td><input type="text" id="descricao" name="descricao"/></td>
+				<th/>
+				<td>Data:</td>
+				<td><input type="text" id="data" name="data"/></td>
+				<td><input type="submit" id="enviar" value="Enviar"/></td>
+			</tr>
+		</table>
+	</form>
+	<br/>
+	
 	<div id='calendar'></div>
 	
 <script type="text/javascript">
@@ -38,9 +54,7 @@ $(document).ready(function() {
 	$.get( "buscarCalendarioDatas", function(response) { // Início do Ajax
 		
 		var datas = JSON.parse(response);
-		
-		//datas = {title: 'All Day Event', start: '2017-02-01'};
-		
+				
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
@@ -56,6 +70,31 @@ $(document).ready(function() {
 		});
 	});	// Fim do Ajax
 });
-</script>	
+</script>
+
+<script type="text/javascript">
+	function validarCampos() {
+		var descricao = document.getElementById("descricao").value;
+		var data = document.getElementById("data").value;
+		
+		if (descricao == "" && data == "") {
+			alert("Os campos descrição e data não podem estar em branco! ");
+			return false;
+		} else if (descricao == "" && data != "") {
+			alert("O campo descrição não pode estar em branco!");
+			return false;
+		} else if (descricao != "" && data == "") {
+			alert("O campo data não pode estar em branco!");
+			return false;
+		}
+		return true;
+	}
+</script>
+
+<script>
+	$(document).ready(function(){
+		$('#data').mask('00/00/0000');
+	});
+</script>
 </body>
 </html>
