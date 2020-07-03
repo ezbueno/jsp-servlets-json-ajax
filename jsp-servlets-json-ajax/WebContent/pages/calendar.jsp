@@ -32,12 +32,11 @@
 <body>
 	<h1>Calendário</h1>
 		
-	<form action="buscarCalendarioDatas" method="post">
+	<form action="buscarCalendarioDatas" method="post" onsubmit="return validarCampos() ? true : false">
 		<table>
 			<tr>
 				<td>Descrição:</td>
 				<td><input type="text" id="descricao" name="descricao"/></td>
-				<th/>
 				<td>Data:</td>
 				<td><input type="text" id="data" name="data"/></td>
 				<td><input type="submit" id="enviar" value="Enviar"/></td>
