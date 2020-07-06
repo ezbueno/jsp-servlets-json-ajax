@@ -8,7 +8,7 @@ public class Projeto {
 	private Long id;
 	private String nome;
 
-	private List<Serie> series = new ArrayList<>();
+	private List<Series> series = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -26,11 +26,11 @@ public class Projeto {
 		this.nome = nome;
 	}
 
-	public List<Serie> getSeries() {
+	public List<Series> getSeries() {
 		return series;
 	}
 
-	public void setSeries(List<Serie> series) {
+	public void setSeries(List<Series> series) {
 		this.series = series;
 	}
 }

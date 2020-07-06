@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import beans.Projeto;
-import beans.Serie;
+import beans.Series;
 import connection.SingleConnection;
 
 public class DaoGanttChart {
@@ -18,47 +18,51 @@ public class DaoGanttChart {
 		connection = SingleConnection.getConnection();
 	}
 
+	public void atualizar(Series series) throws Exception {
+
+		String sqlUpdate = "update series set datainicial = '"
+				+ series.getDatainicial() + "' , datafinal = '"
+				+ series.getDatafinal() + "' " + "where id = " + series.getId()
+				+ " and projeto = " + series.getProjeto();
+		connection.prepareStatement(sqlUpdate).executeUpdate();
+		connection.commit();
+	}
+
 	public List<Projeto> getProjetos() throws Exception {
-		List<Projeto> projetos = new ArrayList<>();
+		List<Projeto> projetos = new ArrayList<Projeto>();
 
-		String sqlProjeto = "select * from projeto";
-		PreparedStatement preparedStatementProjeto = connection.prepareStatement(sqlProjeto);
-		ResultSet resultSetProjeto = preparedStatementProjeto.executeQuery();
+		String sqlProjetos = "select * from projeto";
+		PreparedStatement statementProjeto = connection
+				.prepareStatement(sqlProjetos);
+		ResultSet resultSetProjetos = statementProjeto.executeQuery();
 
-		while (resultSetProjeto.next()) {
+		while (resultSetProjetos.next()) {
 			Projeto projeto = new Projeto();
-			projeto.setId(resultSetProjeto.getLong("id"));
-			projeto.setNome(resultSetProjeto.getString("nome"));
+			projeto.setId(resultSetProjetos.getLong("id"));
+			projeto.setNome(resultSetProjetos.getString("nome"));
 
-			String sqlSerie = "select * from serie where projeto = " + resultSetProjeto.getLong("id");
-			PreparedStatement preparedStatementSerie = connection.prepareStatement(sqlSerie);
-			ResultSet resultSetSerie = preparedStatementSerie.executeQuery();
+			String sqlSeries = "select * from series where projeto = "
+					+ resultSetProjetos.getLong("id");
+			PreparedStatement preparedStatementSerie = connection
+					.prepareStatement(sqlSeries);
+			ResultSet resultSetSeries = preparedStatementSerie.executeQuery();
+			List<Series> series = new ArrayList<Series>();
 
-			List<Serie> series = new ArrayList<>();
-
-			while (resultSetSerie.next()) {
-				Serie serie = new Serie();
-				serie.setId(resultSetSerie.getLong("id"));
-				serie.setNome(resultSetSerie.getString("nome"));
-				serie.setDatainicial(resultSetSerie.getString("datainicial"));
-				serie.setDatafinal(resultSetSerie.getString("datafinal"));
-				serie.setProjeto(resultSetSerie.getLong("id"));
+			while (resultSetSeries.next()) {
+				Series serie = new Series();
+				serie.setId(resultSetSeries.getLong("id"));
+				serie.setNome(resultSetSeries.getString("nome"));
+				serie.setProjeto(resultSetSeries.getLong("projeto"));
+				serie.setDatainicial(resultSetSeries.getString("datainicial"));
+				serie.setDatafinal(resultSetSeries.getString("datafinal"));
 
 				series.add(serie);
 			}
-
 			projeto.setSeries(series);
+
 			projetos.add(projeto);
 		}
-		return projetos;
-	}
 
-	public void atualizar(Serie serie) throws Exception {
-		String sql = "update serie set datainicial = '"
-				+ serie.getDatainicial() + "' , datafinal = '"
-				+ serie.getDatafinal() + "' " + "where id = " + serie.getId()
-				+ " and projeto = " + serie.getProjeto();
-		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.executeUpdate();
+		return projetos;
 	}
 }
